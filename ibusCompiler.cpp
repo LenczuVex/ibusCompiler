@@ -8,17 +8,16 @@
 static PyObject *ibus_Compiler(PyObject *self, PyObject *args) {
   uint16_t ch[14];
   char *dFrame = new char[32];
-  if (!PyArg_ParseTuple(args, "iiiiiiiiiiiiiiii", dFrame, dFrame + 1,
-                        dFrame + 2, dFrame + 3, dFrame + 4, dFrame + 5,
-                        dFrame + 6, dFrame + 7, dFrame + 8, dFrame + 9,
-                        dFrame + 10, dFrame + 11, dFrame + 12, dFrame + 13)) {
+  if (!PyArg_ParseTuple(args, "iiiiiiiiiiiiii", ch, ch + 1, ch + 2, ch + 3,
+                        ch + 4, ch + 5, ch + 6, ch + 7, ch + 8, ch + 9, ch + 10,
+                        ch + 11, ch + 12, ch + 13)) {
     return NULL;
   }
   struct IBUS_FRAME frame;
   IBUS_init(&frame);
   IBUS_update_channels(&frame, ch);
-  // IBUS_get_frame_to_send(&frame);
-  IBUS_get_crc(&frame);
+  IBUS_get_frame_values(&frame);
+  // IBUS_get_crc(&frame);
 
   for (int i = 0; i < 32; i++) {
     dFrame[i] = frame.full_frame[i];
@@ -29,7 +28,7 @@ static PyObject *ibus_Compiler(PyObject *self, PyObject *args) {
   return pFrame;
 }
 
-PyMODINIT_FUNC PyInit_ibus(void) {
+PyMODINIT_FUNC PyInit__ibus(void) {
   static PyMethodDef IbusMethods[] = {
       {"ibus_Compiler", (PyCFunction)ibus_Compiler, METH_VARARGS,
        "Compile the IBUS frame"},
