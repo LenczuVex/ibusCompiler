@@ -1,0 +1,3 @@
+[submodule "IBUS_ENCODER_DECODER"]
+	path = IBUS_ENCODER_DECODER
+	url = https://github.com/LenczuVex/IBUS_ENCODER_DECODER.git
